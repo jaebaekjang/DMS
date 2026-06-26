@@ -51,6 +51,32 @@ npm run start
 
 ---
 
+## Vercel 배포
+
+표준 Next.js 구조라 Vercel 에서 **추가 설정 없이** 배포됩니다. 기본값이 mock
+모드(`NEXT_PUBLIC_USE_MOCK_DATA` 미설정 시 자동 mock)이므로 **환경변수 없이도
+즉시 동작**합니다.
+
+1. <https://vercel.com/new> 접속 → GitHub 계정 연결
+2. `jaebaekjang/DMS` 저장소 **Import**
+3. **Branch** 를 코드가 있는 `claude/fervent-hopper-3awaen` 로 선택
+   (또는 PR #1 을 머지해 `main` 에 코드를 올린 뒤 `main` 선택)
+4. Framework 는 **Next.js** 로 자동 감지됨 → **Deploy**
+5. 빌드 완료 후 `https://<프로젝트명>.vercel.app` URL 발급
+
+Google Sheets 연동까지 사용하려면 Vercel 프로젝트
+**Settings → Environment Variables** 에 추가:
+
+- `NEXT_PUBLIC_USE_MOCK_DATA = false`
+- `GOOGLE_SHEET_ID`
+- `GOOGLE_SERVICE_ACCOUNT_EMAIL`
+- `GOOGLE_PRIVATE_KEY` (줄바꿈 `\n` escape)
+
+> 로컬에서 직접 배포하려면 프로젝트 폴더에서 `npx vercel` (최초 1회 로그인) →
+> `npx vercel --prod` 를 실행해도 됩니다.
+
+---
+
 ## 환경변수 (`.env.local`)
 
 `.env.example` 을 복사해 `.env.local` 을 만들고 값을 채웁니다.
