@@ -31,6 +31,42 @@ mvn package && java -jar target/dms-landing.jar
 
 ---
 
+## 배포 (JVM 호스팅 — 라이브 주소 받기)
+
+> Vercel 은 Spring Boot(Java 서버)를 정식 지원하지 않으므로, 아래 JVM 호스팅을 사용합니다.
+> 어느 방식이든 **본인 계정에 이 저장소를 연결**하면 라이브 주소가 발급됩니다.
+> 포함된 `Dockerfile` 하나로 어디서나 동일하게 빌드됩니다. (앱은 호스팅이 주는 `$PORT` 를 자동 사용)
+
+### A. Render (가장 간단 · `render.yaml` 블루프린트 포함)
+1. <https://render.com> 가입 → **New → Blueprint** → 이 GitHub 저장소 선택
+2. 저장소 루트의 `render.yaml` 을 자동 인식 → **Apply**
+3. 빌드 완료 후 `https://dms-landing-xxxx.onrender.com` 주소 발급
+4. **Environment** 에서 `ADMIN_PASSWORD_HASH`(또는 `ADMIN_PASSWORD`) 입력 후 재배포
+   - ⚠️ 무료 플랜은 영구 디스크가 없어 재배포 시 파일 데이터가 초기화됩니다.
+     문의 유실 방지를 위해 어드민 → 연동 설정에서 **CRM 웹훅/알림톡**을 함께 켜두세요.
+     영구 보존이 필요하면 유료 플랜 + `render.yaml` 의 `disk` 블록 주석 해제.
+
+### B. Railway
+1. <https://railway.app> → **New Project → Deploy from GitHub repo** → 이 저장소
+2. 서비스 설정에서 **Root Directory = `landing`** 지정 (포함된 `Dockerfile` 사용)
+3. **Variables** 에 `ADMIN_PASSWORD_HASH` 등 입력 → 배포 → 공개 도메인(`*.up.railway.app`) 발급
+4. 영구 보존은 **Volume** 을 `/data` 에 마운트
+
+### C. Fly.io
+```bash
+cd landing
+fly launch --no-deploy        # 앱 생성 (Dockerfile 자동 인식)
+fly volumes create dms_data --size 1
+# fly.toml 의 [mounts] 에 source="dms_data" destination="/data" 추가
+fly secrets set ADMIN_PASSWORD_HASH='...'
+fly deploy
+```
+
+> Docker 가 있는 곳이라면 직접 실행도 가능합니다:
+> `docker build -t dms-landing landing && docker run -p 8080:8080 -e ADMIN_PASSWORD=... dms-landing`
+
+---
+
 ## 아임웹 등 외부 사이트에 붙이기
 
 아임웹 편집 화면에서 **위젯 추가 → 코드 삽입(HTML)** 에 아래를 붙여넣으세요.
