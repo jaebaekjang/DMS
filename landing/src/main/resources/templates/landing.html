@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title th:text="${config.design.brandName} + ' | 매장 토탈케어 월 구독 서비스'">DM'S | 매장 토탈케어 월 구독 서비스</title>
+  <meta name="description" th:content="${config.design.heroSubtitle}"/>
+  <meta property="og:title" th:content="${config.design.heroTitle}"/>
+  <meta property="og:description" th:content="${config.design.heroSubtitle}"/>
+  <link rel="stylesheet" th:href="@{/css/landing.css}"/>
+
+  <!-- 어드민에서 설정한 블랙/주황 색상 주입 -->
+  <style th:inline="text">
+    :root {
+      --brand: [[${config.design.primaryColor}]];
+      --brand-dark: [[${config.design.primaryDark}]];
+      --bg: [[${config.design.bgColor}]];
+      --surface: [[${config.design.surfaceColor}]];
+      --text: [[${config.design.textColor}]];
+      --muted: [[${config.design.mutedColor}]];
+    }
+  </style>
+
+  <!-- GA4 (측정 ID 설정 시에만 주입) -->
+  <th:block th:if="${!#strings.isEmpty(config.tracking.ga4MeasurementId)}">
+    <script async th:attr="src='https://www.googletagmanager.com/gtag/js?id=' + ${config.tracking.ga4MeasurementId}"></script>
+    <script th:inline="javascript">
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', /*[[${config.tracking.ga4MeasurementId}]]*/ 'G-XXXXXXX');
+    </script>
+  </th:block>
+
+  <!-- Meta Pixel (픽셀 ID 설정 시에만 주입) -->
+  <th:block th:if="${!#strings.isEmpty(config.tracking.metaPixelId)}">
+    <script th:inline="javascript">
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', /*[[${config.tracking.metaPixelId}]]*/ '0');
+      fbq('track', 'PageView');
+    </script>
+  </th:block>
+</head>
+<body>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1 th:text="${config.design.heroTitle}">기존 방역비로, 설비·청소까지 관리받는 월 구독 서비스</h1>
+      <p class="lead" th:text="${config.design.heroSubtitle}">벌레, 냄새, 후드, 배수구, 에어컨, 현장점검, 설비 문제까지 한 번에 관리해드립니다.</p>
+      <div class="hero-badges">
+        <div class="hero-badge"><span class="ico">⏱️</span><div><b>24시간 내 대응</b><span>신속한 현장 대응</span></div></div>
+        <div class="hero-badge"><span class="ico">🚚</span><div><b>긴급 출동</b><span>긴급 상황 즉시 지원</span></div></div>
+        <div class="hero-badge"><span class="ico">🛡️</span><div><b>책임 관리</b><span>전문가의 체계적 관리</span></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="care-ring">
+        <div class="core"><b th:text="${config.design.brandName}">DM'S</b><span>Total Care</span></div>
+        <div class="care-node n0"><div class="ico">🐛</div><small>방역 관리</small></div>
+        <div class="care-node n1"><div class="ico">🧰</div><small>설비 관리</small></div>
+        <div class="care-node n2"><div class="ico">🧴</div><small>청소 관리</small></div>
+        <div class="care-node n3"><div class="ico">🚽</div><small>위생 관리</small></div>
+        <div class="care-node n4"><div class="ico">❄️</div><small>에어컨 관리</small></div>
+        <div class="care-node n5"><div class="ico">🧯</div><small>현장 점검</small></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 고민되는 문제 ===== -->
+<section class="section problems">
+  <div class="container center">
+    <h2>매장 운영 중 <span class="point">이런 문제</span>로 고민이신가요?</h2>
+    <div class="problem-list">
+      <div class="problem"><div class="ico">🐛</div><div>벌레</div></div>
+      <div class="problem"><div class="ico">💨</div><div>냄새</div></div>
+      <div class="problem"><div class="ico">🍳</div><div>후드</div></div>
+      <div class="problem"><div class="ico">🚰</div><div>배수구</div></div>
+      <div class="problem"><div class="ico">❄️</div><div>에어컨</div></div>
+      <div class="problem"><div class="ico">🚽</div><div>화장실</div></div>
+      <div class="problem"><div class="ico">⚙️</div><div>설비 문제</div></div>
+    </div>
+    <div class="callout">
+      <span class="point" th:text="${config.design.brandName}">DM'S</span>는 방역·설비·청소를 한 번에 관리하는 <span class="point">월 구독 서비스</span>입니다.
+    </div>
+  </div>
+</section>
+
+<!-- ===== 구독 관리 절차 ===== -->
+<section class="section">
+  <div class="container center">
+    <h2><span class="point" th:text="${config.design.brandName}">DM'S</span> 월 구독 관리 절차</h2>
+    <p style="color:var(--muted)">문의부터 첫 정기점검까지, 매장 상황에 맞는 관리 플랜을 안내합니다.</p>
+    <div class="steps" style="text-align:left">
+      <div class="step"><div class="num">1</div><h3>문의 접수</h3><p>전화, 카카오톡, 네이버톡톡 등으로 매장 문제를 접수합니다.</p></div>
+      <div class="step"><div class="num">2</div><h3>상담·증상 확인</h3><p>업종, 지역, 평수, 기존 방역 이용 여부 등을 확인하고 방문 필요 여부를 판단합니다.</p></div>
+      <div class="step"><div class="num">3</div><h3>정기관리 플랜 제안</h3><p>월 관리 범위, 방문 주기, 구독 혜택을 매장 상황에 맞게 제안합니다.</p></div>
+      <div class="step"><div class="num">4</div><h3>구독 계약 및 정기점검</h3><p>월 비용·방문 주기·포함 범위를 확정한 뒤 정기점검 일정으로 관리가 시작됩니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 구독 상품 ===== -->
+<section class="section problems">
+  <div class="container">
+    <div class="plans">
+      <div class="plan intro">
+        <h3 class="brand-name" th:text="${config.design.brandName}">DM'S</h3>
+        <h3 style="font-size:18px;margin-top:-6px">월 구독 관리 상품</h3>
+        <p style="color:var(--muted);font-size:14px">매장 규모와 상황에 맞는 관리 플랜을 선택하세요.</p>
+      </div>
+      <div class="plan">
+        <span class="tag">Premium</span>
+        <h3>프리미엄</h3>
+        <ul>
+          <li>정기 방역 + 설비 + 청소 관리</li>
+          <li>정기 방문 및 점검</li>
+          <li>문제 발생 시 신속 대응</li>
+          <li>월 구독 비용으로 안심 관리</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <span class="tag">My Package</span>
+        <h3>마이 패키지</h3>
+        <ul>
+          <li>맞춤 조합형 상품 운영</li>
+          <li>맞춤 주기 조정 방문</li>
+          <li>선택 서비스 기반 관리</li>
+          <li>효율적인 비용 설계</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 무료 상담 신청 폼 ===== -->
+<section class="section inquiry" id="inquiry">
+  <div class="container">
+    <div class="form-title">
+      <h2 th:text="${config.design.formTitle}">무료 상담 신청</h2>
+      <p th:text="${config.design.formSubtitle}">접수해주신 내용을 전문가가 검토한 후, 매장 상황에 맞는 상담을 위해 빠르게 전화드립니다.</p>
+    </div>
+
+    <form class="form-card" id="inquiryForm" autocomplete="on" novalidate>
+      <div class="grid-3">
+        <div class="field" style="margin-top:0">
+          <label>매장명</label>
+          <input class="input" type="text" name="storeName" placeholder="예) 맛있는식당" maxlength="100" required/>
+        </div>
+        <div class="field" style="margin-top:0">
+          <label>연락처</label>
+          <input class="input" type="tel" name="phone" placeholder="010-1234-5678" maxlength="20" required/>
+        </div>
+        <div class="field" style="margin-top:0">
+          <label>지역</label>
+          <select class="select" name="region">
+            <option value="">지역을 선택해주세요</option>
+            <option th:each="r : ${config.formOptions.regions}" th:value="${r}" th:text="${r}"></option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>현재 문제 <span class="hint">(드롭다운 / 복수 선택 가능)</span></label>
+        <div class="multiselect" id="issueSelect">
+          <div class="input multiselect-toggle" id="issueToggle" tabindex="0" role="button" aria-expanded="false">
+            <span id="issueLabel" style="color:#6b6b72">현재 문제를 선택해주세요</span><span>▾</span>
+          </div>
+          <div class="multiselect-panel" id="issuePanel">
+            <label th:each="opt : ${config.formOptions.issues}">
+              <input type="checkbox" name="issues" th:value="${opt}"/><span th:text="${opt}"></span>
+            </label>
+          </div>
+        </div>
+        <div class="ex"><b>예시</b>벌레/해충, 하수구 막힘 및 역류, 악취, 누수, 화장실 문제, 수도/수전 문제, 후드 청소 및 주방 시설, 바닥 찌든 때 제거, 에어컨 분해 세척, 매장 전체 관리</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>업종</label>
+          <select class="select" name="industry">
+            <option value="">업종을 선택해주세요</option>
+            <option th:each="i : ${config.formOptions.industries}" th:value="${i}" th:text="${i}"></option>
+          </select>
+          <div class="ex"><b>예시</b>음식점, 요리주점, 카페, 미용실/네일샵/뷰티샵, 편의점/리테일 매장, 기타</div>
+        </div>
+        <div class="field">
+          <label>평수</label>
+          <select class="select" name="size">
+            <option value="">평수를 선택해주세요</option>
+            <option th:each="s : ${config.formOptions.sizes}" th:value="${s}" th:text="${s}"></option>
+          </select>
+          <div class="ex"><b>예시</b>10평 미만, 10평 이상~20평 미만, 20평 이상~30평 미만, 30평 이상~50평 미만, 50평 이상</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>문의 내용 <span class="hint">(선택)</span></label>
+        <textarea class="textarea" name="message" placeholder="매장 상황이나 문의 내용을 입력해주세요." maxlength="2000"></textarea>
+      </div>
+
+      <!-- 스팸 봇 차단용 허니팟 (사람에게는 보이지 않음) -->
+      <div class="honeypot" aria-hidden="true">
+        <label>회사명<input type="text" name="company" tabindex="-1" autocomplete="off"/></label>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn" th:text="'📨 ' + ${config.design.ctaLabel}">📨 무료 상담 신청하기</button>
+      <div class="form-msg" id="formMsg" role="status" aria-live="polite"></div>
+      <div class="privacy">🔒 <span th:text="${config.design.privacyNote}">입력하신 정보는 상담 용도로만 사용되며, 안전하게 보호됩니다.</span></div>
+    </form>
+  </div>
+</section>
+
+<footer class="site-foot">
+  <div class="container">
+    © <span th:text="${#dates.year(#dates.createNow())}">2026</span> <span th:text="${config.design.brandName}">DM'S</span> · 매장 토탈케어 월 구독 서비스
+  </div>
+</footer>
+
+<!-- 상단부터 항상 떠 있는 플로팅 문의 버튼 -->
+<button class="floating-cta" id="floatingCta" th:text="${config.design.floatingLabel}">💬 무료 상담 신청</button>
+
+<!-- 진입 팝업 -->
+<div class="popup-overlay" id="popupOverlay"
+     th:if="${config.popup.enabled}"
+     th:data-days="${config.popup.hideForDays}">
+  <div class="popup-card">
+    <img th:if="${!#strings.isEmpty(config.popup.imageUrl)}" th:src="${config.popup.imageUrl}" alt=""/>
+    <div class="popup-body">
+      <h3 th:text="${config.popup.title}">DM'S 월 구독 이벤트</h3>
+      <p th:text="${config.popup.body}">지금 상담 신청하시면 첫 달 정기점검을 무료로 제공해드립니다.</p>
+      <div class="popup-actions">
+        <a href="#" id="popupCta" th:href="${config.popup.linkUrl}" th:text="${config.popup.buttonLabel}">상담 신청하러 가기</a>
+      </div>
+    </div>
+    <div class="popup-foot">
+      <button type="button" id="popupHideToday">오늘 하루 보지 않기</button>
+      <button type="button" id="popupClose">닫기 ✕</button>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/js/landing.js}"></script>
+</body>
+</html>

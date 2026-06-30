@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>디자인 수정 · DM'S 어드민</title>
+  <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+<body>
+<div class="admin-shell">
+  <div th:replace="~{admin/fragments :: nav('design')}"></div>
+  <main class="admin-main">
+    <h1>디자인 수정</h1>
+    <div class="sub">랜딩페이지의 색상(블랙/주황)과 문구를 변경합니다. 저장 즉시 반영됩니다.</div>
+    <div class="saved" th:if="${param.saved}">저장되었습니다.</div>
+
+    <form th:action="@{/admin/design}" th:object="${config.design}" method="post">
+      <div class="card">
+        <h2>색상</h2>
+        <div class="grid2">
+          <label class="f"><span>포인트(주황)</span>
+            <div class="color-row"><input type="color" th:field="*{primaryColor}"/><input type="text" th:field="*{primaryColor}"/></div>
+          </label>
+          <label class="f"><span>포인트 진한색</span>
+            <div class="color-row"><input type="color" th:field="*{primaryDark}"/><input type="text" th:field="*{primaryDark}"/></div>
+          </label>
+          <label class="f"><span>배경(블랙)</span>
+            <div class="color-row"><input type="color" th:field="*{bgColor}"/><input type="text" th:field="*{bgColor}"/></div>
+          </label>
+          <label class="f"><span>카드 표면</span>
+            <div class="color-row"><input type="color" th:field="*{surfaceColor}"/><input type="text" th:field="*{surfaceColor}"/></div>
+          </label>
+          <label class="f"><span>본문 텍스트</span>
+            <div class="color-row"><input type="color" th:field="*{textColor}"/><input type="text" th:field="*{textColor}"/></div>
+          </label>
+          <label class="f"><span>보조 텍스트</span>
+            <div class="color-row"><input type="color" th:field="*{mutedColor}"/><input type="text" th:field="*{mutedColor}"/></div>
+          </label>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>문구</h2>
+        <label class="f"><span>브랜드명</span><input type="text" th:field="*{brandName}"/></label>
+        <label class="f"><span>히어로 제목</span><textarea th:field="*{heroTitle}"></textarea></label>
+        <label class="f"><span>히어로 소제목</span><textarea th:field="*{heroSubtitle}"></textarea></label>
+        <div class="grid2">
+          <label class="f"><span>폼 제목</span><input type="text" th:field="*{formTitle}"/></label>
+          <label class="f"><span>신청 버튼 문구</span><input type="text" th:field="*{ctaLabel}"/></label>
+        </div>
+        <label class="f"><span>폼 소제목</span><textarea th:field="*{formSubtitle}"></textarea></label>
+        <div class="grid2">
+          <label class="f"><span>플로팅 버튼 문구</span><input type="text" th:field="*{floatingLabel}"/></label>
+          <label class="f"><span>개인정보 안내 문구</span><input type="text" th:field="*{privacyNote}"/></label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn">저장</button>
+    </form>
+  </main>
+</div>
+</body>
+</html>
