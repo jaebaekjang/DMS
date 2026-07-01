@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DM'S 어드민 로그인</title>
+  <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <h1>DM'S 어드민</h1>
+    <div class="login-err" th:if="${param.error}">아이디 또는 비밀번호가 올바르지 않습니다.</div>
+    <div class="saved" th:if="${param.logout}">로그아웃되었습니다.</div>
+    <form th:action="@{/admin/login}" method="post">
+      <label class="f"><span>아이디</span>
+        <input type="text" name="username" autocomplete="username" required autofocus/>
+      </label>
+      <label class="f"><span>비밀번호</span>
+        <input type="password" name="password" autocomplete="current-password" required/>
+      </label>
+      <button type="submit" class="btn" style="width:100%">로그인</button>
+    </form>
+    <p class="muted" style="font-size:12px;margin-top:16px;text-align:center">
+      비밀번호는 서버 환경변수(ADMIN_PASSWORD_HASH)로 관리됩니다.
+    </p>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav class="admin-nav" th:fragment="nav(active)">
+  <div class="logo">DM'S 어드민</div>
+  <a th:href="@{/admin}" th:classappend="${active == 'dashboard'} ? 'active'">📥 문의 접수</a>
+  <a th:href="@{/admin/design}" th:classappend="${active == 'design'} ? 'active'">🎨 디자인 수정</a>
+  <a th:href="@{/admin/popup}" th:classappend="${active == 'popup'} ? 'active'">🪧 팝업 설정</a>
+  <a th:href="@{/admin/integrations}" th:classappend="${active == 'integrations'} ? 'active'">🔌 연동 설정</a>
+  <a th:href="@{/}" target="_blank">↗ 랜딩페이지 보기</a>
+  <div class="logout">
+    <form th:action="@{/admin/logout}" method="post">
+      <button type="submit" class="btn btn-ghost" style="width:100%">로그아웃</button>
+    </form>
+  </div>
+</nav>
+</body>
+</html>

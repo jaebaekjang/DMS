@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>문의 접수 · DM'S 어드민</title>
+  <link rel="stylesheet" th:href="@{/css/admin.css}"/>
+</head>
+<body>
+<div class="admin-shell">
+  <div th:replace="~{admin/fragments :: nav('dashboard')}"></div>
+  <main class="admin-main">
+    <h1>문의 접수</h1>
+    <div class="sub">랜딩페이지·임베드 폼으로 접수된 무료 상담 신청 내역입니다.</div>
+
+    <div class="card">
+      <div class="stat"><span class="muted">총 접수</span><b th:text="${total}">0</b></div>
+    </div>
+
+    <div class="card">
+      <table>
+        <thead>
+        <tr>
+          <th>접수일시</th><th>매장명</th><th>연락처</th><th>지역</th>
+          <th>업종</th><th>평수</th><th>현재 문제</th><th>문의 내용</th><th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${inquiries.isEmpty()}"><td colspan="9" class="muted" style="text-align:center;padding:28px">아직 접수된 문의가 없습니다.</td></tr>
+        <tr th:each="q : ${inquiries}">
+          <td th:text="${#strings.replace(#strings.substring(q.createdAt,0,16),'T',' ')}">2026-01-01 00:00</td>
+          <td th:text="${q.storeName}"></td>
+          <td th:text="${q.phone}"></td>
+          <td th:text="${q.region}"></td>
+          <td th:text="${q.industry}"></td>
+          <td th:text="${q.size}"></td>
+          <td th:text="${q.issuesText()}"></td>
+          <td class="muted" th:text="${q.message}"></td>
+          <td><span class="status-tag" th:text="${q.status}">신규</span></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+</body>
+</html>

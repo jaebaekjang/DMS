@@ -1,0 +1,42 @@
+# ===== Render Blueprint: DM'S 랜딩(Java/Spring Boot) 원클릭 배포 =====
+# Render 대시보드 → New → Blueprint → 이 저장소 선택 시 자동 인식됩니다.
+# (저장소 루트의 Next.js CRM 과 무관하게 landing/ 의 Dockerfile 만 빌드합니다.)
+services:
+  - type: web
+    name: dms-landing
+    runtime: docker
+    plan: free
+    dockerfilePath: ./landing/Dockerfile
+    dockerContext: ./landing
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      # 어드민 비밀번호: 운영에서는 BCrypt 해시 권장. 대시보드에서 직접 값 입력(sync:false).
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      # 데이터 저장 경로. 영구 디스크를 쓰려면 아래 disk 블록 주석을 해제(유료 플랜).
+      - key: DMS_DATA_DIR
+        value: /data
+      # 외부(아임웹 등) 문의 폼 허용 Origin (콤마 구분). 필요 시 입력.
+      - key: ALLOWED_ORIGINS
+        sync: false
+      # 연동 비밀값(선택)
+      - key: GA4_API_SECRET
+        sync: false
+      - key: META_CAPI_TOKEN
+        sync: false
+      - key: MSG_PROVIDER_URL
+        sync: false
+      - key: MSG_API_KEY
+        sync: false
+      - key: MSG_API_SECRET
+        sync: false
+    # ⚠️ 무료 플랜은 영구 디스크를 지원하지 않아 재배포 시 파일이 초기화됩니다.
+    #    문의 유실 방지를 위해 어드민 → 연동 설정에서 CRM 웹훅/알림톡을 함께 사용하세요.
+    #    영구 보존이 필요하면 유료 플랜으로 올리고 아래 주석을 해제하세요.
+    # disk:
+    #   name: dms-data
+    #   mountPath: /data
+    #   sizeGB: 1
